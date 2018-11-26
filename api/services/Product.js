@@ -1,26 +1,30 @@
 var schema = new Schema({
   name: {
     type: String,
-    required: true,
-    excel: true
+    required: true
   },
-  accessLevel: {
-    type: String,
-    default: "Employee",
-    enum: ["Employee", "Owner"]
+  quantity: {
+    type: Number
+  },
+  unit: {
+    type: String
+  },
+  price: {
+    type: Number
   },
   company: {
     type: Schema.Types.ObjectId,
     ref: "Company"
   },
-  mobile: {
-    type: String,
-    default: ""
+  quantity: {
+    type: Number
   },
-  password: {
-    type: String,
-    default: ""
-  }
+  taxes: [
+    {
+      name: String,
+      percentage: Number
+    }
+  ]
 });
 
 schema.plugin(deepPopulate, {
@@ -32,8 +36,7 @@ schema.plugin(deepPopulate, {
 });
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
-
-module.exports = mongoose.model("User", schema);
+module.exports = mongoose.model("Product", schema);
 
 var exports = _.cloneDeep(
   require("sails-wohlig-service")(schema, "company", "company")

@@ -1,39 +1,36 @@
 var schema = new Schema({
   name: {
     type: String,
-    required: true,
-    excel: true
+    required: true
   },
-  accessLevel: {
-    type: String,
-    default: "Employee",
-    enum: ["Employee", "Owner"]
+  mobile: {
+    type: String
+  },
+  password: {
+    type: String
   },
   company: {
     type: Schema.Types.ObjectId,
     ref: "Company"
   },
-  mobile: {
-    type: String,
-    default: ""
+  gst: {
+    type: String
   },
-  password: {
-    type: String,
-    default: ""
+  state: {
+    type: String
   }
 });
 
 schema.plugin(deepPopulate, {
   populate: {
     company: {
-      select: "name _id"
+      select: "name _id state"
     }
   }
 });
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
-
-module.exports = mongoose.model("User", schema);
+module.exports = mongoose.model("Customer", schema);
 
 var exports = _.cloneDeep(
   require("sails-wohlig-service")(schema, "company", "company")
