@@ -38,7 +38,7 @@
         "id": "photo",
         "view": true,
         "disabled": true,
-        "validation": ["required", "trim", "unique"],
+        "validation": ["", "trim", "unique"],
         "url": ""
     }, {
         "name": "Password",
@@ -71,7 +71,7 @@
         "placeholder": "Enter Otp",
         "id": "otp",
         "disabled": false,
-        "validation": ["required", "trim", "unique"],
+        "validation": ["", "trim", "unique"],
         "url": ""
     }, {
         "name": "AccessLevel",
@@ -84,7 +84,7 @@
         "dropDownField": "",
         "dropDownType": "single",
         "onView": true,
-        "dropDown": ["User", "Admin"]
+        "dropDown": ["Owner", "Employee"]
     }, {
         "name": "All Addresses",
         "type": "box",

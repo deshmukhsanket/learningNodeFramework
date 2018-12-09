@@ -38,5 +38,12 @@ module.exports = mongoose.model("User", schema);
 var exports = _.cloneDeep(
   require("sails-wohlig-service")(schema, "company", "company")
 );
-var model = {};
+var model = {
+  login: function (data, callback) {
+    User.findOne({
+      mobile: data.mobile,
+      password: data.password
+    }).exec(callback);
+  }
+};
 module.exports = _.assign(module.exports, exports, model);
