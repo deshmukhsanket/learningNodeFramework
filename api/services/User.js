@@ -1,25 +1,52 @@
 var schema = new Schema({
   name: {
     type: String,
-    required: true,
-    excel: true
+    required: true
   },
-  accessLevel: {
+  type: {
     type: String,
-    default: "Employee",
-    enum: ["Employee", "Owner"]
+    enum: ["Employee", "Owner","Customer"],
+    required:true
   },
-  company: {
+  company: [{
     type: Schema.Types.ObjectId,
     ref: "Company"
-  },
+  }],
+  roles:[{
+    type:String,
+    enum:["Employee","Invoice","Customer","Payment"]
+  }],
   mobile: {
-    type: String,
-    default: ""
+    type: String
   },
   password: {
-    type: String,
-    default: ""
+    type: String
+  },
+  address:{
+    type:String
+  },
+  state:{
+    type:String
+  },
+  logo:{
+    type:String
+  },
+  GSTIN:{
+    type:String
+  },
+  HSN:{
+    type:String
+  },
+  active:{
+    type:Boolean,
+    default:true
+  },
+  creditLimit:{
+    type:Number
+  },
+  pendingBalance:{
+    type:Number,
+    default:0
   }
 });
 
@@ -44,6 +71,18 @@ var model = {
       mobile: data.mobile,
       password: data.password
     }).exec(callback);
-  }
+  },
+  searchType:function(data,callback){
+    var skipData=0;
+    if(data.page){
+      skipData=(data.page-1)*10
+    }
+    User.find({
+      company:data.company,
+      type:data.type
+    }).skip(skipData).limit(10).exec(callback)
+  },
+
+
 };
 module.exports = _.assign(module.exports, exports, model);

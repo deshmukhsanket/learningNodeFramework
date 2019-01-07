@@ -1,7 +1,8 @@
 var schema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    unique:true
   },
   employee: [
     {
@@ -11,8 +12,8 @@ var schema = new Schema({
   ],
   invoicePrefix: {
     type: String,
-    required: true,
-    unique: true
+    // required: true,
+    // unique: true
   },
   gst: {
     type: String

@@ -145,6 +145,23 @@ var controller = {
       "",
       "<html><body>dome content</body></html>"
     );
+  },
+
+  /**
+   * 
+   * searchEmployee
+   * params : 
+   * company
+   * type : Employee/Customer
+   * OutPut : Array Of 10
+   *  */
+  searchType:function(req,res){
+    if(req.body.company){
+      User.searchType(req.body,res.callback)
+    }else{
+      res.json({data:"Please Provide Company && Type",
+    value:false});
+    }
   }
 };
 module.exports = _.assign(module.exports, controller);
