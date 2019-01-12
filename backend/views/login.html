@@ -1,47 +1,34 @@
 <div class="back-color">
   <div class="row">
-    <div class="col-md-7 col-xs-12">
-      <div class="login-logo">
-        <div class="bor-right">
-          <div class="sociis"><h1>COMMON Project</h1></div>
-        </div>
+      <div class="col-md-7 col-xs-12">
+          <div class="login-logo">
+              <div class="bor-right">
+                  <div class="sociis">
+                      <img class="rounded float-right" src="backend/img/sanket logo.png">
+                      <h1>SOCIIS</h1>
+
+
+                  </div>
+              </div>
+          </div>
       </div>
-    </div>
-    <div class="col-md-5 col-xs-12">
-      <div class="login-content">
-        <form>
-          <div class="form-group">
-            <input
-              class="log-form-control"
-              type="text"
-              placeholder="mobile"
-              ng-model="formData.mobile"
-              required
-            />
+      <div class="col-md-5 col-xs-12">
+          <div class="login-content">
+              <form>
+                  <div class="form-group">
+                      <input class="log-form-control" type="text" placeholder="mobile" ng-model="formData.mobile" required/>
+                  </div>
+                  <div class="form-group">
+                      <input class="log-form-control" type="password" placeholder="Password" ng-model="formData.password" required/>
+                  </div>
+                  <div class="connect-btn">
+                      <button type="submit" ng-click="login(formData)" class="btn light-green ">CONNECT</button>
+                  </div>
+                  <div class="mar-t">
+                      <a class="forget-passwordd">Forgot Password?</a>
+                  </div>
+              </form>
           </div>
-          <div class="form-group">
-            <input
-              class="log-form-control"
-              type="password"
-              placeholder="Password"
-              ng-model="formData.password"
-              required
-            />
-          </div>
-          <div class="connect-btn">
-            <button
-              type="submit"
-              ng-click="login(formData)"
-              class="btn light-green "
-            >
-              CONNECT
-            </button>
-          </div>
-          <div class="mar-t">
-            <a class="forget-passwordd">Forgot Password?</a>
-          </div>
-        </form>
       </div>
-    </div>
   </div>
 </div>
