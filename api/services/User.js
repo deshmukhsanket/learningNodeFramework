@@ -77,7 +77,17 @@ var model = {
       }else{
         User.distinct("company",{
           mobile:data.mobile
-        }).exec(callback)
+        }).exec(function(err,companyArr){
+          if(err || _.isEmpty(companyArr)){
+            callback("No such Company",null)
+          }else{
+            Company.find({
+              _id:{$in:companyArr}
+            },{
+              name:1
+            }).exec(callback)
+          }
+        })
       }
     });
   },
