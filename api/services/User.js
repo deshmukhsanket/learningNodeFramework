@@ -92,7 +92,7 @@ var model = {
     }).skip(skipData).limit(10).exec(callback)
   },
   // 
-  createEmployee:function(data,callback){
+  createAllUser:function(data,callback){
     if(data.password){
       data.password=md5(data.password);
       User.saveData(data,callback);
