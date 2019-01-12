@@ -14,7 +14,7 @@ var schema = new Schema({
   }],
   roles:[{
     type:String,
-    enum:["Employee","Invoice","Customer","Payment"]
+    enum:["Employee","Invoice","Customer","Payment","Product"]
   }],
   mobile: {
     type: String
@@ -67,10 +67,19 @@ var exports = _.cloneDeep(
 );
 var model = {
   login: function (data, callback) {
+    data.password=md5(data.password);
     User.findOne({
       mobile: data.mobile,
       password: data.password
-    }).exec(callback);
+    }).exec(function(err,data2){
+      if(err || _.isEmpty(data2)){
+        callback("No Such User",null)
+      }else{
+        User.distinct("company",{
+          mobile:data.mobile
+        }).exec(callback)
+      }
+    });
   },
   searchType:function(data,callback){
     var skipData=0;
@@ -82,6 +91,15 @@ var model = {
       type:data.type
     }).skip(skipData).limit(10).exec(callback)
   },
+  // 
+  createEmployee:function(data,callback){
+    if(data.password){
+      data.password=md5(data.password);
+      User.saveData(data,callback);
+    }else{
+      callback("Provide Password",null)
+    }
+  }
 
 
 };

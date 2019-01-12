@@ -12,9 +12,9 @@ myApp.factory("NavigationService", function($http) {
       icon: "phone"
     },
     {
-      name: "User",
+      name: "Custom",
       classis: "active",
-      sref: "google.com",
+      sref: "#!/custom-state",
       icon: "phone"
     }
   ];
