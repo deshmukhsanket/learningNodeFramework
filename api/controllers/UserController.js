@@ -5,13 +5,6 @@ var controller = {
       name: "Hello World"
     });
   },
-  login: function(req, res) {
-    if (req.body) {
-      User.login(req.body, res.callback);
-    } else {
-      res.callback("Please provide proper parameters", null);
-    }
-  },
   loginFacebook: function(req, res) {
     passport.authenticate(
       "facebook",
@@ -162,6 +155,22 @@ var controller = {
       res.json({data:"Please Provide Company && Type",
     value:false});
     }
-  }
+  },
+  createEmployee:function(req,res){
+    if(req.body.company){
+      User.createEmployee(req.body,res.callback)
+    }else{
+      res.json({data:"Please Provide Company && Type",
+    value:false});
+    }
+  },
+  //  Start Here
+  login: function(req, res) {
+    if (req.body) {
+      User.login(req.body, res.callback);
+    } else {
+      res.callback("Please provide proper parameters", null);
+    }
+  },
 };
 module.exports = _.assign(module.exports, controller);

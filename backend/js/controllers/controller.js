@@ -1457,4 +1457,17 @@ myApp
       }
       //  $rootScope.$apply();
     };
+  })
+  .controller("customStateCtrl", function(
+    $scope,
+    TemplateService,
+    NavigationService,
+    $timeout,
+    $state
+  ) {
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("custom");
+    $scope.menutitle = NavigationService.makeactive("custom");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
   });

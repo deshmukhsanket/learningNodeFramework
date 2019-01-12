@@ -68,6 +68,11 @@ myApp.config(function(
       templateUrl: "views/template.html",
       controller: "CreateCountryCtrl"
     })
+    .state("customState", {
+      url: "/custom-state",
+      templateUrl: "views/template.html",
+      controller: "customStateCtrl"
+    })
 
     .state("editcountry", {
       url: "/country-edit/:id",
