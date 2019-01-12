@@ -156,9 +156,9 @@ var controller = {
     value:false});
     }
   },
-  createEmployee:function(req,res){
+  createAllUser:function(req,res){
     if(req.body.company){
-      User.createEmployee(req.body,res.callback)
+      User.createAllUser(req.body,res.callback)
     }else{
       res.json({data:"Please Provide Company && Type",
     value:false});
