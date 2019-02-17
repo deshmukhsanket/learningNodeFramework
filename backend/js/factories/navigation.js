@@ -16,12 +16,51 @@ myApp.factory("NavigationService", function($http) {
       classis: "active",
       sref: "#!/custom-state",
       icon: "phone"
+    },
+    {
+      name: "Employee",
+      classis: "active",
+      sref: "#!/custom-state",
+      icon: "phone"
+    },
+    {
+      name: "Invoice",
+      classis: "active",
+      sref: "#!/custom-state",
+      icon: "phone"
+    },
+    {
+      name: "Customer",
+      classis: "active",
+      sref: "#!/custom-state",
+      icon: "phone"
+    },
+    {
+      name: "Payment",
+      classis: "active",
+      sref: "#!/custom-state",
+      icon: "phone"
+    },
+    {
+      name: "Product",
+      classis: "active",
+      sref: "#!/custom-state",
+      icon: "phone"
     }
   ];
 
   return {
     getnav: function() {
-      return navigation;
+      var roles = $.jStorage.get('user').roles
+      var nav = [];
+      _.each(navigation,function(navi){
+         _.each(roles,function(role){
+                if(role == navi.name){
+                  nav.push(navi);
+                }
+        })
+      })
+      return nav;
     },
     login: function(data, callback) {
       console.log("Data", adminurl);
@@ -77,6 +116,8 @@ myApp.factory("NavigationService", function($http) {
     makeactive: function(menuname) {
       for (var i = 0; i < navigation.length; i++) {
         if (navigation[i].name == menuname) {
+      console.log(menuname)
+
           navigation[i].classis = "active";
         } else {
           navigation[i].classis = "";

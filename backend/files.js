@@ -55,5 +55,7 @@ module.exports = [
   "backend/js/factories/navigation.js",
 
   // Contorllers
-  "backend/js/controllers/controller.js"
+  "backend/js/controllers/controller.js",
+  "backend/js/controllers/invoiceview.js"
+
 ];

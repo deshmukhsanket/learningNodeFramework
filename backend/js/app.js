@@ -40,7 +40,11 @@ myApp.config(function(
       templateUrl: "views/login.html",
       controller: "LoginCtrl"
     })
-
+    .state("invoice-view", {
+      url: "/invoice-view",
+      templateUrl: "views/template.html",
+      controller: "InvoiceViewCtrl"
+    })
     .state("page", {
       url: "/page/:id/{page:.*}/{keyword:.*}",
       templateUrl: "views/template.html",

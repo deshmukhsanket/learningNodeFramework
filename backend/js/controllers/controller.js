@@ -13,6 +13,7 @@ myApp
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
   })
+ 
 
   .controller("AccessController", function(
     $scope,
@@ -20,11 +21,12 @@ myApp
     NavigationService,
     $timeout,
     $state
-  ) {
-    if ($.jStorage.get("accessToken")) {
-    } else {
-      $state.go("dashboard");
-    }
+  ) 
+  {
+  //   if ($.jStorage.get("accessToken")) {
+  //   } else {
+  //     $state.go("dashboard");
+  //   }
   })
 
   .controller("JagzCtrl", function(
@@ -723,7 +725,8 @@ myApp
     var modalInstance 
    $scope.login = function(){
      NavigationService.apiCall('User/login',$scope.formData,function(data){
-       $scope.companies = data.data;
+       $scope.companies = data.data.companyArr;
+        $scope.user = data.data.User
         modalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,
         templateUrl: "views/modal/company.html",
@@ -738,7 +741,9 @@ myApp
    }
    $scope.selectCompany = function(selectedCompany){
      $.jStorage.set('company', selectedCompany);
+     $.jStorage.set('user',$scope.user);
       modalInstance.close();
+      $state.go('invoice-view');
    }
   })
 
@@ -1435,6 +1440,9 @@ myApp
       fromParams
     ) {
       $(window).scrollTop(0);
+      $scope.logout = function(){
+        $.jStorage.flush();
+      }
     });
   })
 
