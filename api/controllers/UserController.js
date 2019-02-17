@@ -1,14 +1,13 @@
 module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
-  index: function(req, res) {
+  index: function (req, res) {
     res.json({
       name: "Hello World"
     });
   },
-  loginFacebook: function(req, res) {
+  loginFacebook: function (req, res) {
     passport.authenticate(
-      "facebook",
-      {
+      "facebook", {
         scope: ["public_profile", "user_friends", "email"],
         failureRedirect: "/"
       },
@@ -16,29 +15,27 @@ var controller = {
     )(req, res);
   },
 
-  loginGoogle: function(req, res) {
+  loginGoogle: function (req, res) {
     if (req.query.returnUrl) {
       req.session.returnUrl = req.query.returnUrl;
-    } else {
-    }
+    } else {}
 
     passport.authenticate(
-      "google",
-      {
+      "google", {
         scope: ["openid", "profile", "email"],
         failureRedirect: "/"
       },
       res.socialLogin
     )(req, res);
   },
-  profile: function(req, res) {
+  profile: function (req, res) {
     if (req.body && req.body.accessToken) {
       User.profile(req.body, res.callback);
     } else {
       res.callback("Please provide Valid AccessToken", null);
     }
   },
-  pdf: function(req, res) {
+  pdf: function (req, res) {
     var html = fs.readFileSync("./views/pdf/demo.ejs", "utf8");
     var options = {
       format: "A4"
@@ -48,31 +45,31 @@ var controller = {
     var writestream = gfs.createWriteStream({
       filename: newFilename
     });
-    writestream.on("finish", function() {
+    writestream.on("finish", function () {
       res.callback(null, {
         name: newFilename
       });
     });
-    pdf.create(html).toStream(function(err, stream) {
+    pdf.create(html).toStream(function (err, stream) {
       stream.pipe(writestream);
     });
   },
-  backupDatabase: function(req, res) {
+  backupDatabase: function (req, res) {
     res.connection.setTimeout(200000000);
     req.connection.setTimeout(200000000);
     var q = req.host.search("127.0.0.1");
     if (q >= 0) {
-      _.times(20, function(n) {
+      _.times(20, function (n) {
         var name = moment()
           .subtract(5 + n, "days")
           .format("ddd-Do-MMM-YYYY");
-        exec("cd backup && rm -rf " + name + "*", function(
+        exec("cd backup && rm -rf " + name + "*", function (
           err,
           stdout,
           stderr
         ) {});
       });
-      var jagz = _.map(mongoose.models, function(Model, key) {
+      var jagz = _.map(mongoose.models, function (Model, key) {
         var name = Model.collection.collectionName;
         return {
           key: key,
@@ -80,16 +77,13 @@ var controller = {
         };
       });
       res.json("Files deleted and new has to be created.");
-      jagz.push(
-        {
-          key: "fs.chunks",
-          name: "fs.chunks"
-        },
-        {
-          key: "fs.files",
-          name: "fs.files"
-        }
-      );
+      jagz.push({
+        key: "fs.chunks",
+        name: "fs.chunks"
+      }, {
+        key: "fs.files",
+        name: "fs.files"
+      });
       var isBackup = fs.existsSync("./backup");
       if (!isBackup) {
         fs.mkdirSync("./backup");
@@ -100,18 +94,18 @@ var controller = {
       fs.mkdirSync(folderName);
       async.eachSeries(
         jagz,
-        function(obj, callback) {
+        function (obj, callback) {
           exec(
             "mongoexport --db " +
-              database +
-              " --collection " +
-              obj.name +
-              " --out " +
-              folderName +
-              "/" +
-              obj.name +
-              ".json",
-            function(data1, data2, data3) {
+            database +
+            " --collection " +
+            obj.name +
+            " --out " +
+            folderName +
+            "/" +
+            obj.name +
+            ".json",
+            function (data1, data2, data3) {
               retVal.push(
                 data3 + " VALUES OF " + obj.name + " MODEL NAME " + obj.key
               );
@@ -119,7 +113,7 @@ var controller = {
             }
           );
         },
-        function() {
+        function () {
           // res.json(retVal);
         }
       );
@@ -127,10 +121,10 @@ var controller = {
       res.callback("Access Denied for Database Backup");
     }
   },
-  getAllMedia: function(req, res) {
+  getAllMedia: function (req, res) {
     Media.getAllMedia(req.body, res.callback);
   },
-  sendmail: function(req, res) {
+  sendmail: function (req, res) {
     Config.sendEmail(
       "chintan@wohlig.com",
       "jagruti@wohlig.com",
@@ -138,6 +132,26 @@ var controller = {
       "",
       "<html><body>dome content</body></html>"
     );
+  },
+
+
+  //  Start Here
+  login: function (req, res) {
+    if (req.body) {
+      User.login(req.body, res.callback);
+    } else {
+      res.callback("Please provide proper parameters", null);
+    }
+  },
+  createAllUser: function (req, res) {
+    if (req.body.company) {
+      User.createAllUser(req.body, res.callback)
+    } else {
+      res.json({
+        data: "Please Provide Company && Type",
+        value: false
+      });
+    }
   },
 
   /**
@@ -148,28 +162,14 @@ var controller = {
    * type : Employee/Customer
    * OutPut : Array Of 10
    *  */
-  searchType:function(req,res){
-    if(req.body.company){
-      User.searchType(req.body,res.callback)
-    }else{
-      res.json({data:"Please Provide Company && Type",
-    value:false});
-    }
-  },
-  createAllUser:function(req,res){
-    if(req.body.company){
-      User.createAllUser(req.body,res.callback)
-    }else{
-      res.json({data:"Please Provide Company && Type",
-    value:false});
-    }
-  },
-  //  Start Here
-  login: function(req, res) {
-    if (req.body) {
-      User.login(req.body, res.callback);
+  searchType: function (req, res) {
+    if (req.body.company) {
+      User.searchType(req.body, res.callback)
     } else {
-      res.callback("Please provide proper parameters", null);
+      res.json({
+        data: "Please Provide Company && Type",
+        value: false
+      });
     }
   },
 };
