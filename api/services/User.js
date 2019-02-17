@@ -34,9 +34,6 @@ var schema = new Schema({
   GSTIN: {
     type: String
   },
-  HSN: {
-    type: String
-  },
   active: {
     type: Boolean,
     default: true
