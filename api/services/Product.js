@@ -3,28 +3,26 @@ var schema = new Schema({
     type: String,
     required: true
   },
-  quantity: {
-    type: Number
-  },
   unit: {
     type: String
   },
-  price: {
+  rate: {
     type: Number
   },
   company: {
     type: Schema.Types.ObjectId,
     ref: "Company"
   },
-  quantity: {
-    type: Number
-  },
-  taxes: [
-    {
-      name: String,
-      percentage: Number
+  tax: [{
+    name: String,
+    percentage: Number,
+    active: {
+      type: Boolean
     }
-  ]
+  }],
+  HSN: {
+    type: String
+  },
 });
 
 schema.plugin(deepPopulate, {

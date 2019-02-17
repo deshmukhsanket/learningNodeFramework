@@ -34,9 +34,6 @@ var schema = new Schema({
   GSTIN: {
     type: String
   },
-  HSN: {
-    type: String
-  },
   active: {
     type: Boolean,
     default: true
@@ -88,7 +85,16 @@ var model = {
               }
             }, {
               name: 1
-            }).exec(callback)
+            }).exec(function (err, data) {
+              if (err) {
+                callback(err, null)
+              } else {
+                callback(null, {
+                  User: data2,
+                  companyArr: data
+                })
+              }
+            })
           }
         })
       }
