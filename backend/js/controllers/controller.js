@@ -711,7 +711,8 @@ myApp
     $timeout,
     $stateParams,
     $state,
-    toastr
+    toastr,
+    $uibModal
   ) {
     //Used to name the .html file
     $scope.menutitle = NavigationService.makeactive("Login");
@@ -719,23 +720,21 @@ myApp
     $scope.template = TemplateService;
     $scope.currentHost = window.location.origin;
     $scope.formData = {};
-    $scope.login = form => {
-        NavigationService.login(form, loginResult => {
-          if (loginResult.value === true) {
-            if ($.jStorage.get("getLoginEmployee").Is == "Customer") {
-              toastr.success("LOGIN SUCCESSFULL", "SUCCESS");
-              $state.go("editcustomer", {
-                id: $.jStorage.get("getLoginEmployee")._id
-              });
-            } else {
-              toastr.success("LOGIN SUCCESSFULL", "SUCCESS");
-              $state.go("invoice-list");
-            }
-          } else {
-            toastr.error("INVALID CREDENTIALS", "LOGIN ERROR");
-          }
-        });
+   $scope.login = function(){
+     NavigationService.apiCall('User/login',$scope.formData,function(data){
+       console.log('company',data)
+       var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: "views/modal/company.html",
+        size: "sm",
+        scope: $scope
+      });
+      $scope.close = function(value) {
+        callback(value);
+        modalInstance.close("cancel");
       };
+     })
+   }
   })
 
   .controller("CountryCtrl", function(
