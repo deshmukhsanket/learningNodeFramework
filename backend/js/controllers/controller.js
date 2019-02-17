@@ -720,13 +720,14 @@ myApp
     $scope.template = TemplateService;
     $scope.currentHost = window.location.origin;
     $scope.formData = {};
+    var modalInstance 
    $scope.login = function(){
      NavigationService.apiCall('User/login',$scope.formData,function(data){
-       console.log('company',data)
-       var modalInstance = $uibModal.open({
+       $scope.companies = data.data;
+        modalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,
         templateUrl: "views/modal/company.html",
-        size: "sm",
+        size: "md",
         scope: $scope
       });
       $scope.close = function(value) {
@@ -734,6 +735,10 @@ myApp
         modalInstance.close("cancel");
       };
      })
+   }
+   $scope.selectCompany = function(selectedCompany){
+     $.jStorage.set('company', selectedCompany);
+      modalInstance.close();
    }
   })
 

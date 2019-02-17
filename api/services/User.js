@@ -67,6 +67,7 @@ var exports = _.cloneDeep(
 );
 var model = {
   login: function (data, callback) {
+    console.log(data.password)
     data.password = md5(data.password);
     User.findOne({
       mobile: data.mobile,

@@ -1,3 +1,29 @@
 <div class='back-color'>
-    <p>bfjhsfhjdshj</p>
+    <form name="modalForm" ng-submit="submitModal(data);$dismiss()" class="min-hit">
+        <div class="modal-header blue-bg  ">
+            <div class="pull-right">
+                <a class="btn btn-clear" ng-click="$dismiss()">
+                    <i class="ln-cross"></i>
+                </a>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                        <div class="text-center">
+                            
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button"  data-toggle="dropdown">Dropdown Example
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                          <li ng-repeat='company in companies' ng-click = 'selectCompany(company)'>{{company.name}}</li>
+                        </ul>
+                      </div>
+                    </div>
+                </div>
+            </div>
+    
+           
+        </div>
+    </form>
 </div>
