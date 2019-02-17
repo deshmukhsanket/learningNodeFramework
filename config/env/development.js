@@ -21,6 +21,6 @@ module.exports = {
     //   connection: 'someMongodbServer'
     // }
     port: 80,
-    realHost: "http://wohlig.io:80",
+    realHost: "http://localhost:80",
     emails: ["chintan@wohlig.com", "jagruti@wohlig.com", "tushar@wohlig.com", "chirag@wohlig.com", "harsh@wohlig.com","sohan@wohlig.com"]
 };
