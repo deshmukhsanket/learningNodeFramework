@@ -2,14 +2,12 @@ var schema = new Schema({
   name: {
     type: String,
     required: true,
-    unique:true
+    unique: true
   },
-  employee: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "User"
-    }
-  ],
+  employee: [{
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }],
   invoicePrefix: {
     type: String,
     // required: true,
@@ -20,6 +18,9 @@ var schema = new Schema({
   },
   state: {
     type: String
+  },
+  stateCode: {
+    type: Number
   }
 });
 

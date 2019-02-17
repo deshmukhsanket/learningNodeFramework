@@ -5,16 +5,16 @@ var schema = new Schema({
   },
   type: {
     type: String,
-    enum: ["Employee", "Owner","Customer"],
-    required:true
+    enum: ["Employee", "Owner", "Customer"],
+    required: true
   },
   company: [{
     type: Schema.Types.ObjectId,
     ref: "Company"
   }],
-  roles:[{
-    type:String,
-    enum:["Employee","Invoice","Customer","Payment","Product"]
+  roles: [{
+    type: String,
+    enum: ["Employee", "Invoice", "Customer", "Payment", "Product"]
   }],
   mobile: {
     type: String
@@ -22,31 +22,31 @@ var schema = new Schema({
   password: {
     type: String
   },
-  address:{
-    type:String
+  address: {
+    type: String
   },
-  state:{
-    type:String
+  state: {
+    type: String
   },
-  logo:{
-    type:String
+  logo: {
+    type: String
   },
-  GSTIN:{
-    type:String
+  GSTIN: {
+    type: String
   },
-  HSN:{
-    type:String
+  HSN: {
+    type: String
   },
-  active:{
-    type:Boolean,
-    default:true
+  active: {
+    type: Boolean,
+    default: true
   },
-  creditLimit:{
-    type:Number
+  creditLimit: {
+    type: Number
   },
-  pendingBalance:{
-    type:Number,
-    default:0
+  pendingBalance: {
+    type: Number,
+    default: 0
   }
 });
 
@@ -67,47 +67,49 @@ var exports = _.cloneDeep(
 );
 var model = {
   login: function (data, callback) {
-    data.password=md5(data.password);
+    data.password = md5(data.password);
     User.findOne({
       mobile: data.mobile,
       password: data.password
-    }).exec(function(err,data2){
-      if(err || _.isEmpty(data2)){
-        callback("No Such User",null)
-      }else{
-        User.distinct("company",{
-          mobile:data.mobile
-        }).exec(function(err,companyArr){
-          if(err || _.isEmpty(companyArr)){
-            callback("No such Company",null)
-          }else{
+    }).exec(function (err, data2) {
+      if (err || _.isEmpty(data2)) {
+        callback("No Such User", null)
+      } else {
+        User.distinct("company", {
+          mobile: data.mobile
+        }).exec(function (err, companyArr) {
+          if (err || _.isEmpty(companyArr)) {
+            callback("No such Company", null)
+          } else {
             Company.find({
-              _id:{$in:companyArr}
-            },{
-              name:1
+              _id: {
+                $in: companyArr
+              }
+            }, {
+              name: 1
             }).exec(callback)
           }
         })
       }
     });
   },
-  searchType:function(data,callback){
-    var skipData=0;
-    if(data.page){
-      skipData=(data.page-1)*10
+  searchType: function (data, callback) {
+    var skipData = 0;
+    if (data.page) {
+      skipData = (data.page - 1) * 10
     }
     User.find({
-      company:data.company,
-      type:data.type
+      company: data.company,
+      type: data.type
     }).skip(skipData).limit(10).exec(callback)
   },
   // 
-  createAllUser:function(data,callback){
-    if(data.password){
-      data.password=md5(data.password);
-      User.saveData(data,callback);
-    }else{
-      callback("Provide Password",null)
+  createAllUser: function (data, callback) {
+    if (data.password) {
+      data.password = md5(data.password);
+      User.saveData(data, callback);
+    } else {
+      callback("Provide Password", null)
     }
   }
 
