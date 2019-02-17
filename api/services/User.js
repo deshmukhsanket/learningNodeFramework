@@ -8,10 +8,10 @@ var schema = new Schema({
     enum: ["Employee", "Owner", "Customer"],
     required: true
   },
-  company: [{
+  company: {
     type: Schema.Types.ObjectId,
     ref: "Company"
-  }],
+  },
   roles: [{
     type: String,
     enum: ["Employee", "Invoice", "Customer", "Payment", "Product"]
