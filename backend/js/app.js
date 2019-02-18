@@ -19,7 +19,7 @@ var myApp = angular.module("myApp", [
   "ui.sortable"
 ]);
 
-myApp.config(function(
+myApp.config(function (
   $stateProvider,
   $urlRouterProvider,
   $httpProvider,
@@ -41,9 +41,13 @@ myApp.config(function(
       controller: "LoginCtrl"
     })
     .state("invoice-view", {
-      url: "/invoice-view",
+      url: "/invoice-view/{page:.*}/{keyword:.*}",
       templateUrl: "views/template.html",
-      controller: "InvoiceViewCtrl"
+      controller: "InvoiceViewCtrl",
+      params: {
+        page: "1",
+        keyword: ""
+      }
     })
     .state("page", {
       url: "/page/:id/{page:.*}/{keyword:.*}",
@@ -76,37 +80,13 @@ myApp.config(function(
       url: "/custom-state",
       templateUrl: "views/template.html",
       controller: "customStateCtrl"
-    })
-
-    .state("editcountry", {
-      url: "/country-edit/:id",
-      templateUrl: "views/template.html",
-      controller: "EditCountryCtrl"
-    })
-
-    .state("schema-creator", {
-      url: "/schema-creator",
-      templateUrl: "views/template.html",
-      controller: "SchemaCreatorCtrl"
-    })
-
-    .state("excel-upload", {
-      url: "/excel-upload/:model",
-      templateUrl: "views/template.html",
-      controller: "ExcelUploadCtrl"
-    })
-
-    .state("jagz", {
-      url: "/jagz",
-      templateUrl: "views/jagz.html",
-      controller: "JagzCtrl"
     });
 
   $urlRouterProvider.otherwise("/login");
   $locationProvider.html5Mode(isproduction);
 });
 
-myApp.config(function($translateProvider) {
+myApp.config(function ($translateProvider) {
   $translateProvider.translations("en", LanguageEnglish);
   $translateProvider.translations("hi", LanguageHindi);
   $translateProvider.preferredLanguage("en");

@@ -1109,6 +1109,7 @@ img.uploadingImage {
 }
 
 .widget-title>h3 {
+    color: white;
     float: none;
     padding-right: 0px;
 }
@@ -1320,12 +1321,15 @@ body {
     // width: 90%;
     margin: 195px 0px;
 }
+
 body {
     background-color: #27363d;
 }
-.back-color{
+
+.back-color {
     background-color: #27363d;
 }
+
 .sociis {
     h1 {
         padding: 0% 40%;
@@ -1340,6 +1344,7 @@ body {
         animation-duration: 3s;
         animation-fill-mode: forwards;
     }
+
     img {
         padding: 0%;
         width: 200px;
@@ -1353,27 +1358,32 @@ body {
         animation-duration: 3s;
         animation-fill-mode: forwards;
     }
+
     @keyframes example {
         from {
             left: 0%;
             top: 0%;
         }
+
         to {
             left: 35%;
             top: 0%;
         }
     }
+
     @keyframes h1example {
         from {
             left: 35%;
             top: 0%;
         }
+
         to {
             left: 0%;
             top: 0%;
         }
     }
 }
+
 .bor-right {
     height: 250px;
     border-right: 1px solid #536269;
@@ -1386,6 +1396,7 @@ body {
     overflow: hidden;
     position: relative;
 }
+
 /* Start writing sass here */
 
 @import "fancybox-override";

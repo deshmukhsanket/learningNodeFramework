@@ -1,6 +1,6 @@
 var globalfunction = {};
 myApp
-  .controller("DashboardCtrl", function(
+  .controller("DashboardCtrl", function (
     $scope,
     TemplateService,
     NavigationService,
@@ -13,93 +13,22 @@ myApp
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
   })
- 
 
-  .controller("AccessController", function(
+
+  .controller("AccessController", function (
     $scope,
     TemplateService,
     NavigationService,
     $timeout,
     $state
-  ) 
-  {
-  //   if ($.jStorage.get("accessToken")) {
-  //   } else {
-  //     $state.go("dashboard");
-  //   }
-  })
-
-  .controller("JagzCtrl", function(
-    $scope,
-    TemplateService,
-    NavigationService,
-    $timeout,
-    $state,
-    $interval
   ) {
-    function toColor(num, red) {
-      num >>>= 0;
-      var b = num & 0xff,
-        g = (num & 0xff00) >>> 8,
-        r = (num & 0xff0000) >>> 16,
-        a = ((num & 0xff000000) >>> 24) / 255;
-      if (red == "red") {
-        r = 255;
-        b = 0;
-        g = 0;
-      }
-      return "rgba(" + [r, g, b, a].join(",") + ")";
-    }
-
-    $scope.circles = _.times(360, function(n) {
-      var radius = _.random(0, 10);
-      return {
-        width: radius,
-        height: radius,
-        background: toColor(_.random(-12525360, 12525360)),
-        top: _.random(0, $(window).height()),
-        left: _.random(0, $(window).width())
-      };
-    });
-
-    function generateCircle() {
-      _.each($scope.circles, function(n, index) {
-        var radius = _.random(0, 10);
-        n.width = radius;
-        n.height = radius;
-        n.background = toColor(_.random(-12525360, 12525360));
-        if (count % 7 === 0 || count % 7 === 5 || count % 7 === 6) {
-          if (count % 7 === 6) {
-            n.background = toColor(_.random(-12525360, 12525360), "red");
-            // n.width = 3;
-            // n.height = 3;
-          }
-          var t = (index * Math.PI) / 180;
-          var x = 4.0 * Math.pow(Math.sin(t), 3);
-          var y =
-            3.0 * Math.cos(t) -
-            1.3 * Math.cos(2 * t) -
-            0.6 * Math.cos(3 * t) -
-            0.2 * Math.cos(4 * t);
-          n.top = -50 * y + 300;
-          n.left = 50 * x + $(window).width() / 2;
-        } else {
-          n.top = _.random(0, $(window).height());
-          n.left = _.random(0, $(window).width());
-        }
-      });
-    }
-
-    var count = 0;
-
-    $interval(function() {
-      count++;
-      console.log("Version 1.1");
-      generateCircle();
-    }, 5000);
+    //   if ($.jStorage.get("accessToken")) {
+    //   } else {
+    //     $state.go("dashboard");
+    //   }
   })
 
-  .controller("MultipleSelectCtrl", function(
+  .controller("MultipleSelectCtrl", function (
     $scope,
     $window,
     TemplateService,
@@ -111,7 +40,7 @@ myApp
     toastr
   ) {
     var i = 0;
-    $scope.getValues = function(filter, insertFirst) {
+    $scope.getValues = function (filter, insertFirst) {
       var dataSend = {
         keyword: $scope.search.modelData,
         filter: filter,
@@ -120,12 +49,12 @@ myApp
       if (dataSend.keyword === null || dataSend.keyword === undefined) {
         dataSend.keyword = "";
       }
-      NavigationService[$scope.api]($scope.url, dataSend, ++i, function(data) {
+      NavigationService[$scope.api]($scope.url, dataSend, ++i, function (data) {
         if (data.value) {
           $scope.list = data.data.results;
           if ($scope.search.modelData) {
             $scope.showCreate = true;
-            _.each($scope.list, function(n) {
+            _.each($scope.list, function (n) {
               // if (n.name) {
               if (_.lowerCase(n.name) == _.lowerCase($scope.search.modelData)) {
                 $scope.showCreate = false;
@@ -167,7 +96,7 @@ myApp
     $scope.listview = false;
     $scope.showCreate = false;
     $scope.typeselect = "";
-    $scope.showList = function() {
+    $scope.showList = function () {
       var areFiltersThere = true;
       var filter = {};
       if ($scope.filter) {
@@ -187,7 +116,7 @@ myApp
       }
 
       if (filter) {
-        _.each(filter, function(n, key) {
+        _.each(filter, function (n, key) {
           if (_.isEmpty(n)) {
             areFiltersThere = false;
             toastr.warning("Please enter " + getName(key));
@@ -199,15 +128,15 @@ myApp
         $scope.searchNew(true);
       }
     };
-    $scope.closeList = function() {
+    $scope.closeList = function () {
       $scope.listview = false;
     };
-    $scope.closeListSlow = function() {
-      $timeout(function() {
+    $scope.closeListSlow = function () {
+      $timeout(function () {
         $scope.closeList();
       }, 500);
     };
-    $scope.searchNew = function(dontFlush) {
+    $scope.searchNew = function (dontFlush) {
       if (!dontFlush) {
         $scope.model = "";
       }
@@ -217,7 +146,7 @@ myApp
       }
       $scope.getValues(filter);
     };
-    $scope.createNew = function(create) {
+    $scope.createNew = function (create) {
       var newCreate = $filter("capitalize")(create);
       var data = {
         name: newCreate
@@ -225,7 +154,7 @@ myApp
       if ($scope.filter) {
         data = _.assign(data, JSON.parse($scope.filter));
       }
-      NavigationService[$scope.create](data, function(data) {
+      NavigationService[$scope.create](data, function (data) {
         if (data.value) {
           toastr.success(
             $scope.name + " Created Successfully",
@@ -239,13 +168,13 @@ myApp
       });
       $scope.listview = false;
     };
-    $scope.sendData = function(val, name) {
+    $scope.sendData = function (val, name) {
       $scope.search.modelData = name;
       $scope.ngName = name;
       $scope.model = val;
       $scope.listview = false;
     };
-    $scope.$watch("model", function(newVal, oldVal) {
+    $scope.$watch("model", function (newVal, oldVal) {
       if ($scope.model) {
         if (_.isObject($scope.model)) {
           $scope.sendData($scope.model._id, $scope.model.name);
@@ -254,7 +183,7 @@ myApp
     });
   })
 
-  .controller("PageJsonCtrl", function(
+  .controller("PageJsonCtrl", function (
     $scope,
     TemplateService,
     NavigationService,
@@ -269,50 +198,36 @@ myApp
     $scope.menutitle = NavigationService.makeactive("Country List");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
-    JsonService.getJson($stateParams.id, function() {});
+    JsonService.getJson($stateParams.id, function () {});
 
-    globalfunction.confDel = function(callback) {
+    globalfunction.confDel = function (callback) {
       var modalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,
         templateUrl: "views/modal/conf-delete.html",
         size: "sm",
         scope: $scope
       });
-      $scope.close = function(value) {
+      $scope.close = function (value) {
         callback(value);
         modalInstance.close("cancel");
       };
     };
 
-    globalfunction.openModal = function(callback) {
+    globalfunction.openModal = function (callback) {
       var modalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,
         templateUrl: "views/modal/modal.html",
         size: "lg",
         scope: $scope
       });
-      $scope.close = function(value) {
+      $scope.close = function (value) {
         callback(value);
         modalInstance.close("cancel");
       };
     };
-
-    // globalfunction.confDel(function (value) {
-    //     console.log(value);
-    //     if (value) {
-    //         NavigationService.apiCall(id, function (data) {
-    //             if (data.value) {
-    //                 $scope.showAllCountries();
-    //                 toastr.success("Country deleted successfully.", "Country deleted");
-    //             } else {
-    //                 toastr.error("There was an error while deleting country", "Country deleting error");
-    //             }
-    //         });
-    //     }
-    // });
   })
 
-  .controller("ViewCtrl", function(
+  .controller("ViewCtrl", function (
     $scope,
     TemplateService,
     NavigationService,
@@ -336,7 +251,7 @@ myApp
     if ($stateParams.keyword) {
       $scope.search.keyword = $stateParams.keyword;
     }
-    $scope.changePage = function(page) {
+    $scope.changePage = function (page) {
       var goTo = "page";
       if ($scope.search.keyword) {
         goTo = "page";
@@ -348,19 +263,18 @@ myApp
       });
     };
 
-    $scope.getAllItems = function(keywordChange) {
+    $scope.getAllItems = function (keywordChange) {
       $scope.totalItems = undefined;
       if (keywordChange) {
         $scope.currentPage = 1;
       }
       NavigationService.search(
-        $scope.json.json.apiCall.url,
-        {
+        $scope.json.json.apiCall.url, {
           page: $scope.currentPage,
           keyword: $scope.search.keyword
         },
         ++i,
-        function(data, ini) {
+        function (data, ini) {
           if (ini == i) {
             $scope.items = data.data.results;
             $scope.totalItems = data.data.total;
@@ -373,7 +287,7 @@ myApp
     $scope.getAllItems();
   })
 
-  .controller("DetailCtrl", function(
+  .controller("DetailCtrl", function (
     $scope,
     TemplateService,
     NavigationService,
@@ -394,7 +308,7 @@ myApp
     if ($scope.json.json.preApi) {
       var obj = {};
       obj[$scope.json.json.preApi.params] = $scope.json.keyword._id;
-      NavigationService.apiCall($scope.json.json.preApi.url, obj, function(
+      NavigationService.apiCall($scope.json.json.preApi.url, obj, function (
         data
       ) {
         $scope.data = data.data;
@@ -405,7 +319,7 @@ myApp
     }
     //  END FOR EDIT
 
-    $scope.onCancel = function(sendTo) {
+    $scope.onCancel = function (sendTo) {
       $scope.json.json.action[1].stateName.json.keyword = "";
       $scope.json.json.action[1].stateName.json.page = "";
       $state.go(
@@ -414,11 +328,11 @@ myApp
       );
     };
 
-    $scope.saveData = function(formData) {
+    $scope.saveData = function (formData) {
       NavigationService.apiCall(
         $scope.json.json.apiCall.url,
         formData,
-        function(data) {
+        function (data) {
           var messText = "created";
           if (data.value === true) {
             $scope.json.json.action[0].stateName.json.keyword = "";
@@ -432,11 +346,11 @@ myApp
             }
             toastr.success(
               $scope.json.json.name +
-                " " +
-                formData.name +
-                " " +
-                messText +
-                " successfully."
+              " " +
+              formData.name +
+              " " +
+              messText +
+              " successfully."
             );
           } else {
             messText = "creating";
@@ -450,7 +364,7 @@ myApp
     };
   })
 
-  .controller("DetailFieldCtrl", function(
+  .controller("DetailFieldCtrl", function (
     $scope,
     TemplateService,
     NavigationService,
@@ -470,7 +384,7 @@ myApp
     $scope.tagNgModel = {};
     // $scope.boxModel
     if ($scope.type.validation) {
-      var isRequired = _.findIndex($scope.type.validation, function(n) {
+      var isRequired = _.findIndex($scope.type.validation, function (n) {
         return n == "required";
       });
       if (isRequired >= 0) {
@@ -488,12 +402,11 @@ myApp
     if ($scope.type.type == "multipleCheckbox") {
       if ($scope.type.url !== "") {
         NavigationService.searchCall(
-          $scope.type.url,
-          {
+          $scope.type.url, {
             keyword: ""
           },
           1,
-          function(data1) {
+          function (data1) {
             $scope.items[$scope.type.tableRef] = data1.data.results;
             if ($scope.json.keyword._id) {
               console.log(
@@ -501,14 +414,10 @@ myApp
                 $scope.formData[$scope.type.tableRef]
               );
               for (
-                var idx = 0;
-                idx < $scope.items[$scope.type.tableRef].length;
-                idx++
+                var idx = 0; idx < $scope.items[$scope.type.tableRef].length; idx++
               ) {
                 for (
-                  var formIdx = 0;
-                  formIdx < $scope.formData[$scope.type.tableRef].length;
-                  formIdx++
+                  var formIdx = 0; formIdx < $scope.formData[$scope.type.tableRef].length; formIdx++
                 ) {
                   if (
                     $scope.items[$scope.type.tableRef][idx]._id ==
@@ -527,10 +436,10 @@ myApp
     }
 
     // Set multiple checkbox field
-    $scope.setSelectedItem = function(item) {
+    $scope.setSelectedItem = function (item) {
       if (typeof $scope.formData[$scope.type.tableRef] === "undefined")
         $scope.formData[$scope.type.tableRef] = [];
-      var index = _.findIndex($scope.formData[$scope.type.tableRef], function(
+      var index = _.findIndex($scope.formData[$scope.type.tableRef], function (
         doc
       ) {
         return doc._id == item._id;
@@ -549,7 +458,7 @@ myApp
       var returnval = {};
       if (obj.length >= 2) {
         obj = _.split(obj[1], "&");
-        _.each(obj, function(n) {
+        _.each(obj, function (n) {
           var newn = _.split(n, "=");
           returnval[newn[0]] = newn[1];
           return;
@@ -568,7 +477,7 @@ myApp
     }
     if ($scope.type.type == "youtube") {
       $scope.youtube = {};
-      $scope.changeYoutubeUrl = function(string) {
+      $scope.changeYoutubeUrl = function (string) {
         if (string) {
           $scope.formData[$scope.type.tableRef] = "";
           var result = getJsonFromUrl(string);
@@ -600,12 +509,12 @@ myApp
       };
     }
     $scope.state = "";
-    $scope.createBox = function(state) {
+    $scope.createBox = function (state) {
       $scope.state = state;
       $scope.model.push({});
       $scope.editBox("Create", $scope.model[$scope.model.length - 1]);
     };
-    $scope.editBox = function(state, data) {
+    $scope.editBox = function (state, data) {
       $scope.state = state;
       $scope.data = data;
       if (!$scope.formData[$scope.type.tableRef]) {
@@ -622,12 +531,12 @@ myApp
         size: "lg",
         scope: $scope
       });
-      $scope.close = function(value) {
+      $scope.close = function (value) {
         callback(value);
         modalInstance.close("cancel");
       };
     };
-    $scope.deleteBox = function(index, data) {
+    $scope.deleteBox = function (index, data) {
       console.log(data);
       data.splice(index, 1);
     };
@@ -674,15 +583,14 @@ myApp
     // };
 
     //  TAGS STATIC AND FROM TABLE
-    $scope.refreshTags = function(search) {
+    $scope.refreshTags = function (search) {
       if ($scope.type.url !== "") {
         NavigationService.searchCall(
-          $scope.type.url,
-          {
+          $scope.type.url, {
             keyword: search
           },
           1,
-          function(data1) {
+          function (data1) {
             $scope.tags[$scope.type.tableRef] = data1.data.results;
           }
         );
@@ -694,10 +602,10 @@ myApp
       $scope.refreshTags();
     }
 
-    $scope.tagClicked = function(select, index) {
+    $scope.tagClicked = function (select, index) {
       if ($scope.type.fieldType === "array") {
         $scope.formData[$scope.type.tableRef] = [];
-        _.each(select, function(n) {
+        _.each(select, function (n) {
           $scope.formData[$scope.type.tableRef].push(n._id);
         });
       } else {
@@ -706,7 +614,7 @@ myApp
     };
   })
 
-  .controller("LoginCtrl", function(
+  .controller("LoginCtrl", function (
     $scope,
     TemplateService,
     NavigationService,
@@ -722,109 +630,33 @@ myApp
     $scope.template = TemplateService;
     $scope.currentHost = window.location.origin;
     $scope.formData = {};
-    var modalInstance 
-   $scope.login = function(){
-     NavigationService.apiCall('User/login',$scope.formData,function(data){
-       $scope.companies = data.data.companyArr;
-        $scope.user = data.data.User
+    var modalInstance
+    $scope.login = function () {
+      NavigationService.apiCall('User/login', $scope.formData, function (data) {
+        $scope.companies = data.data.companyArr;
+        $scope.user = data.data.User;
         modalInstance = $uibModal.open({
-        animation: $scope.animationsEnabled,
-        templateUrl: "views/modal/company.html",
-        size: "md",
-        scope: $scope
-      });
-      $scope.close = function(value) {
-        callback(value);
-        modalInstance.close("cancel");
-      };
-     })
-   }
-   $scope.selectCompany = function(selectedCompany){
-     $.jStorage.set('company', selectedCompany);
-     $.jStorage.set('user',$scope.user);
+          animation: $scope.animationsEnabled,
+          templateUrl: "views/modal/company.html",
+          size: "md",
+          scope: $scope
+        });
+        $scope.close = function (value) {
+          callback(value);
+          modalInstance.close("cancel");
+        };
+      })
+    }
+    $scope.selectCompany = function (selectedCompany) {
+      $.jStorage.set('company', selectedCompany);
+      $.jStorage.set('user', $scope.user);
       modalInstance.close();
       $state.go('invoice-view');
-   }
-  })
-
-  .controller("CountryCtrl", function(
-    $scope,
-    TemplateService,
-    NavigationService,
-    $timeout,
-    $state,
-    $stateParams,
-    toastr
-  ) {
-    //Used to name the .html file
-    $scope.template = TemplateService.changecontent("country-list");
-    $scope.menutitle = NavigationService.makeactive("Country List");
-    TemplateService.title = $scope.menutitle;
-    $scope.navigation = NavigationService.getnav();
-    $scope.currentPage = $stateParams.page;
-    var i = 0;
-    $scope.search = {
-      keyword: ""
-    };
-    if ($stateParams.keyword) {
-      $scope.search.keyword = $stateParams.keyword;
     }
-    $scope.showAllCountries = function(keywordChange) {
-      $scope.totalItems = undefined;
-      if (keywordChange) {
-        $scope.currentPage = 1;
-      }
-      NavigationService.searchCountry(
-        {
-          page: $scope.currentPage,
-          keyword: $scope.search.keyword
-        },
-        ++i,
-        function(data, ini) {
-          if (ini == i) {
-            $scope.countries = data.data.results;
-            $scope.totalItems = data.data.total;
-            $scope.maxRow = data.data.options.count;
-          }
-        }
-      );
-    };
-
-    $scope.changePage = function(page) {
-      var goTo = "country-list";
-      if ($scope.search.keyword) {
-        goTo = "country-list";
-      }
-      $state.go(goTo, {
-        page: page,
-        keyword: $scope.search.keyword
-      });
-    };
-    $scope.showAllCountries();
-    $scope.deleteCountry = function(id) {
-      globalfunction.confDel(function(value) {
-        console.log(value);
-        if (value) {
-          NavigationService.deleteCountry(id, function(data) {
-            if (data.value) {
-              $scope.showAllCountries();
-              toastr.success(
-                "Country deleted successfully.",
-                "Country deleted"
-              );
-            } else {
-              toastr.error(
-                "There was an error while deleting country",
-                "Country deleting error"
-              );
-            }
-          });
-        }
-      });
-    };
   })
 
-  .controller("CreateCountryCtrl", function(
+
+  .controller("CreateCountryCtrl", function (
     $scope,
     TemplateService,
     NavigationService,
@@ -843,9 +675,9 @@ myApp
       name: "Create Country"
     };
     $scope.formData = {};
-    $scope.saveCountry = function(formData) {
+    $scope.saveCountry = function (formData) {
       console.log($scope.formData);
-      NavigationService.countrySave($scope.formData, function(data) {
+      NavigationService.countrySave($scope.formData, function (data) {
         if (data.value === true) {
           $state.go("country-list");
           toastr.success(
@@ -859,329 +691,8 @@ myApp
     };
   })
 
-  .controller("CreateAssignmentCtrl", function(
-    $scope,
-    TemplateService,
-    NavigationService,
-    $timeout,
-    $state,
-    toastr,
-    $stateParams,
-    $uibModal
-  ) {
-    //Used to name the .html file
 
-    $scope.template = TemplateService.changecontent("assignment-detail");
-    $scope.menutitle = NavigationService.makeactive("Assignment");
-    TemplateService.title = $scope.menutitle;
-    $scope.navigation = NavigationService.getnav();
-
-    $scope.header = {
-      name: "Create Assignment"
-    };
-    $scope.formData = {};
-    $scope.formData.status = true;
-    $scope.formData.invoice = [];
-    $scope.formData.products = [];
-    $scope.formData.LRs = [];
-    $scope.formData.vehicleNumber = [];
-    $scope.formData.others = [];
-    $scope.formData.shareWith = [];
-    $scope.modalData = {};
-    $scope.modalIndex = "";
-    $scope.wholeObj = [];
-    $scope.addModels = function(dataArray, data) {
-      dataArray.push(data);
-    };
-
-    // NavigationService.searchNatureLoss(function(data) {
-    //     $scope.natureLoss = data.data.results;
-    // });
-
-    $scope.refreshShareWith = function(data, office) {
-      var formdata = {};
-      formdata.search = data;
-      formdata.filter = {
-        postedAt: office
-      };
-      NavigationService.searchEmployee(formdata, 1, function(data) {
-        $scope.shareWith = data.data.results;
-      });
-    };
-    $scope.refreshNature = function(data, causeloss) {
-      var formdata = {};
-      formdata.search = data;
-      formdata.filter = {
-        _id: causeloss
-      };
-      NavigationService.getNatureLoss(formdata, 1, function(data) {
-        $scope.natureLoss = data.data.results;
-      });
-    };
-
-    $scope.addModal = function(
-      filename,
-      index,
-      holdobj,
-      data,
-      current,
-      wholeObj
-    ) {
-      if (index !== "") {
-        $scope.modalData = data;
-        $scope.modalIndex = index;
-      } else {
-        $scope.modalData = {};
-        $scope.modalIndex = "";
-      }
-      $scope.wholeObj = wholeObj;
-      $scope.current = current;
-      $scope.holdObject = holdobj;
-      var modalInstance = $uibModal.open({
-        scope: $scope,
-        templateUrl: "views/modal/" + filename + ".html",
-        size: "lg"
-      });
-    };
-
-    $scope.addElements = function(moddata) {
-      if ($scope.modalIndex !== "") {
-        $scope.wholeObj[$scope.modalIndex] = moddata;
-      } else {
-        $scope.newjson = moddata;
-        var a = moddata;
-        switch ($scope.holdObject) {
-          case "invoice":
-            {
-              var newmod = a.invoiceNumber.split(",");
-              _.each(newmod, function(n) {
-                $scope.newjson.invoiceNumber = n;
-                $scope.wholeObj.push($scope.newjson);
-              });
-            }
-            break;
-          case "products":
-            {
-              var newmod1 = a.item.split(",");
-              _.each(newmod1, function(n) {
-                $scope.newjson.item = n;
-                $scope.wholeObj.push($scope.newjson);
-              });
-            }
-            break;
-          case "LRs":
-            var newmod2 = a.lrNumber.split(",");
-            _.each(newmod2, function(n) {
-              $scope.newjson.lrNumber = n;
-              $scope.wholeObj.push($scope.newjson);
-            });
-            break;
-          case "Vehicle":
-            var newmod3 = a.vehicleNumber.split(",");
-            _.each(newmod3, function(n) {
-              $scope.newjson.vehicleNumber = n;
-              $scope.wholeObj.push($scope.newjson);
-            });
-            break;
-
-          default: {
-            $scope.wholeObj.push($scope.newjson);
-          }
-        }
-      }
-    };
-
-    $scope.deleteElements = function(index, data) {
-      data.splice(index, 1);
-    };
-
-    $scope.submit = function(formData) {
-      console.log($scope.formData);
-      NavigationService.assignmentSave($scope.formData, function(data) {
-        if (data.value === true) {
-          $state.go("assignment-list");
-          toastr.success(
-            "Assignment " + formData.name + " created successfully.",
-            "Assignment Created"
-          );
-        } else {
-          toastr.error(
-            "Assignment creation failed.",
-            "Assignment creation error"
-          );
-        }
-      });
-    };
-  })
-
-  .controller("EditAssignmentCtrl", function(
-    $scope,
-    TemplateService,
-    NavigationService,
-    $timeout,
-    $state,
-    toastr,
-    $stateParams,
-    $uibModal
-  ) {
-    //Used to name the .html file
-
-    $scope.template = TemplateService.changecontent("assignment-detail");
-    $scope.menutitle = NavigationService.makeactive("Assignment");
-    TemplateService.title = $scope.menutitle;
-    $scope.navigation = NavigationService.getnav();
-
-    $scope.header = {
-      name: "Edit Assignment"
-    };
-    $scope.formData = {};
-    $scope.formData.status = true;
-    $scope.formData.invoice = [];
-    $scope.formData.products = [];
-    $scope.formData.LRs = [];
-    $scope.formData.vehicleNumber = [];
-    $scope.formData.others = [];
-    $scope.formData.shareWith = [];
-    $scope.modalData = {};
-    $scope.modalIndex = "";
-    $scope.wholeObj = [];
-    $scope.addModels = function(dataArray, data) {
-      dataArray.push(data);
-    };
-
-    NavigationService.getOneModel("Assignment", $stateParams.id, function(
-      data
-    ) {
-      $scope.formData = data.data;
-      $scope.formData.dateOfIntimation = new Date(data.data.dateOfIntimation);
-      $scope.formData.dateOfAppointment = new Date(data.data.dateOfAppointment);
-      $scope.formData.country = data.data.city.district.state.zone.country._id;
-      $scope.formData.zone = data.data.city.district.state.zone._id;
-      $scope.formData.state = data.data.city.district.state._id;
-      $scope.formData.district = data.data.city.district._id;
-      $scope.formData.city = data.data.city._id;
-      $scope.formData.insuredOfficer = data.data.insuredOfficer._id;
-      console.log($scope.formData.policyDoc);
-      console.log($scope.formData);
-    });
-
-    $scope.refreshShareWith = function(data, office) {
-      var formdata = {};
-      formdata.search = data;
-      formdata.filter = {
-        postedAt: office
-      };
-      NavigationService.searchEmployee(formdata, 1, function(data) {
-        $scope.shareWith = data.data.results;
-      });
-    };
-    $scope.refreshNature = function(data, causeloss) {
-      var formdata = {};
-      formdata.search = data;
-      formdata.filter = {
-        _id: causeloss
-      };
-      NavigationService.getNatureLoss(formdata, 1, function(data) {
-        $scope.natureLoss = data.data.results;
-      });
-    };
-
-    $scope.addModal = function(
-      filename,
-      index,
-      holdobj,
-      data,
-      current,
-      wholeObj
-    ) {
-      if (index !== "") {
-        $scope.modalData = data;
-        $scope.modalIndex = index;
-      } else {
-        $scope.modalData = {};
-        $scope.modalIndex = "";
-      }
-      $scope.wholeObj = wholeObj;
-      $scope.current = current;
-      $scope.holdObject = holdobj;
-      var modalInstance = $uibModal.open({
-        scope: $scope,
-        templateUrl: "views/modal/" + filename + ".html",
-        size: "lg"
-      });
-    };
-
-    $scope.addElements = function(moddata) {
-      if ($scope.modalIndex !== "") {
-        $scope.wholeObj[$scope.modalIndex] = moddata;
-      } else {
-        $scope.newjson = moddata;
-        var a = moddata;
-        switch ($scope.holdObject) {
-          case "invoice":
-            {
-              var newmod = a.invoiceNumber.split(",");
-              _.each(newmod, function(n) {
-                $scope.newjson.invoiceNumber = n;
-                $scope.wholeObj.push($scope.newjson);
-              });
-            }
-            break;
-          case "products":
-            {
-              var newmod1 = a.item.split(",");
-              _.each(newmod1, function(n) {
-                $scope.newjson.item = n;
-                $scope.wholeObj.push($scope.newjson);
-              });
-            }
-            break;
-          case "LRs":
-            var newmod2 = a.lrNumber.split(",");
-            _.each(newmod2, function(n) {
-              $scope.newjson.lrNumber = n;
-              $scope.wholeObj.push($scope.newjson);
-            });
-            break;
-          case "Vehicle":
-            var newmod3 = a.vehicleNumber.split(",");
-            _.each(newmod3, function(n) {
-              $scope.newjson.vehicleNumber = n;
-              $scope.wholeObj.push($scope.newjson);
-            });
-            break;
-
-          default: {
-            $scope.wholeObj.push($scope.newjson);
-          }
-        }
-      }
-    };
-
-    $scope.deleteElements = function(index, data) {
-      data.splice(index, 1);
-    };
-
-    $scope.submit = function(formData) {
-      console.log($scope.formData);
-      NavigationService.assignmentSave($scope.formData, function(data) {
-        if (data.value === true) {
-          $state.go("assignment-list");
-          toastr.success(
-            "Assignment " + formData.name + " created successfully.",
-            "Assignment Created"
-          );
-        } else {
-          toastr.error(
-            "Assignment creation failed.",
-            "Assignment creation error"
-          );
-        }
-      });
-    };
-  })
-
-  .controller("EditCountryCtrl", function(
+  .controller("EditCountryCtrl", function (
     $scope,
     TemplateService,
     NavigationService,
@@ -1201,13 +712,13 @@ myApp
       name: "Edit Country"
     };
 
-    NavigationService.getOneCountry($stateParams.id, function(data) {
+    NavigationService.getOneCountry($stateParams.id, function (data) {
       $scope.formData = data.data;
       console.log("$scope.oneCountry", $scope.oneCountry);
     });
 
-    $scope.saveCountry = function(formValid) {
-      NavigationService.countryEditSave($scope.formData, function(data) {
+    $scope.saveCountry = function (formValid) {
+      NavigationService.countryEditSave($scope.formData, function (data) {
         if (data.value === true) {
           $state.go("country-list");
           console.log("Check this one");
@@ -1222,7 +733,7 @@ myApp
     };
   })
 
-  .controller("SchemaCreatorCtrl", function(
+  .controller("SchemaCreatorCtrl", function (
     $scope,
     TemplateService,
     NavigationService,
@@ -1242,8 +753,7 @@ myApp
       "Grid View",
       "Grid View Drag and Drop"
     ];
-    $scope.schema = [
-      {
+    $scope.schema = [{
         schemaType: "Boolean",
         Input1: "",
         Input2: ""
@@ -1340,8 +850,7 @@ myApp
       }
     ];
 
-    $scope.inputTypes = [
-      {
+    $scope.inputTypes = [{
         value: "",
         name: "Select type of input"
       },
@@ -1362,38 +871,34 @@ myApp
     $scope.formData = {};
     $scope.formData.status = true;
 
-    $scope.formData.forms = [
-      {
-        head: "",
-        items: [{}, {}]
-      }
-    ];
+    $scope.formData.forms = [{
+      head: "",
+      items: [{}, {}]
+    }];
 
-    $scope.addHead = function() {
+    $scope.addHead = function () {
       $scope.formData.forms.push({
         head: $scope.formData.forms.length + 1,
         items: [{}]
       });
     };
-    $scope.removeHead = function(index) {
+    $scope.removeHead = function (index) {
       if ($scope.formData.forms.length > 1) {
         $scope.formData.forms.splice(index, 1);
       } else {
-        $scope.formData.forms = [
-          {
-            head: "",
-            items: [{}, {}]
-          }
-        ];
+        $scope.formData.forms = [{
+          head: "",
+          items: [{}, {}]
+        }];
       }
     };
 
-    $scope.addItem = function(obj) {
+    $scope.addItem = function (obj) {
       var index = $scope.formData.forms.indexOf(obj);
       $scope.formData.forms[index].items.push({});
     };
 
-    $scope.removeItem = function(obj, indexItem) {
+    $scope.removeItem = function (obj, indexItem) {
       var indexHead = $scope.formData.forms.indexOf(obj);
       if ($scope.formData.forms[indexHead].items.length > 1) {
         $scope.formData.forms[indexHead].items.splice(indexItem, 1);
@@ -1403,7 +908,7 @@ myApp
     };
   })
 
-  .controller("ExcelUploadCtrl", function(
+  .controller("ExcelUploadCtrl", function (
     $scope,
     TemplateService,
     NavigationService,
@@ -1422,17 +927,17 @@ myApp
       model: $stateParams.model
     };
 
-    $scope.excelUploaded = function() {
+    $scope.excelUploaded = function () {
       console.log("Excel is uploaded with name " + $scope.form.file);
-      NavigationService.uploadExcel($scope.form, function(data) {
+      NavigationService.uploadExcel($scope.form, function (data) {
         $scope.data = data.data;
       });
     };
   })
 
-  .controller("headerctrl", function($scope, TemplateService, $uibModal) {
+  .controller("headerctrl", function ($scope, TemplateService, $uibModal) {
     $scope.template = TemplateService;
-    $scope.$on("$stateChangeSuccess", function(
+    $scope.$on("$stateChangeSuccess", function (
       event,
       toState,
       toParams,
@@ -1440,19 +945,19 @@ myApp
       fromParams
     ) {
       $(window).scrollTop(0);
-      $scope.logout = function(){
+      $scope.logout = function () {
         $.jStorage.flush();
       }
     });
   })
 
-  .controller("languageCtrl", function(
+  .controller("languageCtrl", function (
     $scope,
     TemplateService,
     $translate,
     $rootScope
   ) {
-    $scope.changeLanguage = function() {
+    $scope.changeLanguage = function () {
       console.log("Language CLicked");
 
       if (!$.jStorage.get("language")) {
@@ -1470,7 +975,7 @@ myApp
       //  $rootScope.$apply();
     };
   })
-  .controller("customStateCtrl", function(
+  .controller("customStateCtrl", function (
     $scope,
     TemplateService,
     NavigationService,
